@@ -1,4 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ilkom Forum (Next.js + PocketBase)
+
+This app implements a minimal forum using Next.js App Router, PocketBase auth (Google OAuth), React Query, and Tailwind.
+
+## Prerequisites
+
+- PocketBase running locally at http://127.0.0.1:8090 (or set NEXT_PUBLIC_PB_URL)
+- In PocketBase Settings → Auth providers, enable Google OAuth and set allowed redirect to http://localhost:3000/login
+- Collections as in `pb_schema.json`
+
+## Configure
+
+Create `.env.local` in the project root:
+
+```
+NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090
+```
+
+## Run
+
+- Install deps: `pnpm install`
+- Dev server: `pnpm dev`
+
+Routes:
+
+- `/login` – Google sign-in and callback
+- `/forum` – posts list with Latest/Popular filters
+- `/forum/[id]` – post details and comments
+- `/new-post` – create a post
+- `/profile` – set username and upload avatar
+
+All routes are protected by middleware except `/login`.
+
+## Notes
+
+- Session is stored in a cookie `pb_auth` and refreshed in middleware.
+- Popular filter counts comments inside a selected window and sorts posts by that count.This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
