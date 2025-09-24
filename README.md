@@ -1,72 +1,45 @@
 # Ilkom Forum (Next.js + PocketBase)
 
-This app implements a minimal forum using Next.js App Router, PocketBase auth (Google OAuth), React Query, and Tailwind.
+Forum sederhana bergaya Reddit menggunakan Next.js App Router, PocketBase (Google OAuth), React Query, dan Tailwind CSS.
 
-## Prerequisites
+## Prasyarat
 
-- PocketBase running locally at http://127.0.0.1:8090 (or set NEXT_PUBLIC_PB_URL)
-- In PocketBase Settings → Auth providers, enable Google OAuth and set allowed redirect to http://localhost:3000/login
-- Collections as in `pb_schema.json`
+- PocketBase berjalan lokal di http://127.0.0.1:8090 atau gunakan URL host dan set `NEXT_PUBLIC_PB_URL`.
+- Aktifkan Google OAuth di PocketBase → Settings → Auth providers, tambahkan allowed redirect: `http://localhost:3000/login`.
+- Skema koleksi sesuai `pb_schema.json`.
 
-## Configure
+## Konfigurasi
 
-Create `.env.local` in the project root:
+Salin `.env.example` menjadi `.env.local` lalu sesuaikan:
 
 ```
 NEXT_PUBLIC_PB_URL=http://127.0.0.1:8090
 ```
 
-## Run
+## Menjalankan secara lokal
 
-- Install deps: `pnpm install`
-- Dev server: `pnpm dev`
-
-Routes:
-
-- `/login` – Google sign-in and callback
-- `/forum` – posts list with Latest/Popular filters
-- `/forum/[id]` – post details and comments
-- `/new-post` – create a post
-- `/profile` – set username and upload avatar
-
-All routes are protected by middleware except `/login`.
-
-## Notes
-
-- Session is stored in a cookie `pb_auth` and refreshed in middleware.
-- Popular filter counts comments inside a selected window and sorts posts by that count.This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
+```powershell
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplikasi akan berjalan di http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Rute utama
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/login` – Google sign-in dan callback
+- `/forum` – daftar post; mode: Terbaru (sort -created) dan Populer (3 hari terakhir, urut komentar); dukungan `?q=` untuk pencarian
+- `/forum/[id]` – detail post dan komentar
+- `/new-post` – membuat post baru
+- `/profile` – set username dan avatar
 
-## Learn More
+Semua rute dilindungi middleware kecuali `/login`.
 
-To learn more about Next.js, take a look at the following resources:
+## Catatan
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Sesi disimpan di cookie `pb_auth` dan diperbarui oleh middleware.
+- Mode Populer membatasi post 3 hari terakhir, menghitung komentar secara batched, lalu mengurutkan berdasarkan jumlah komentar.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Set `NEXT_PUBLIC_PB_URL` ke URL PocketBase publik (gunakan HTTPS di produksi).
