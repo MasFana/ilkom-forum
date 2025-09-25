@@ -21,6 +21,7 @@ type ListAuthMethodsResponse = {
 function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
+  const isCallback = !!params.get("state") && !!params.get("code");
 
   useEffect(() => {
     const pb = getPB();
@@ -29,7 +30,7 @@ function LoginInner() {
       if (pb.authStore.isValid) {
         // persist to cookie then navigate
         saveAuthCookie(pb);
-        router.replace("/forum");
+        window.location.replace("/forum");
       }
     }, true);
 
@@ -55,7 +56,7 @@ function LoginInner() {
               saveAuthCookie(pb);
               localStorage.removeItem("pb_oauth2");
               // Redirect right away after successful OAuth
-              router.replace("/forum");
+              window.location.replace("/forum");
               return;
             }
           }
@@ -64,7 +65,7 @@ function LoginInner() {
         console.error(e);
       }
       // If already logged-in (no OAuth flow), go to homepage (/forum)
-      if (pb.authStore.isValid) router.replace("/forum");
+      if (pb.authStore.isValid) window.location.replace("/forum");
     })();
     return () => unsub();
   }, [router, params]);
@@ -100,28 +101,35 @@ function LoginInner() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center" aria-labelledby="login-heading">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <div className="flex flex-col items-center text-center">
-          <div className="mb-4 flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/favicon.ico" alt="logo" className="h-8 w-8 rounded" />
-            <span className="text-lg font-semibold">Ilkom Forum</span>
-          </div>
-          <h1 id="login-heading" className="text-xl font-semibold mb-2">Masuk</h1>
-          <p className="text-sm opacity-70 mb-6">Masuk untuk bergabung dalam diskusi</p>
-          <Button
-            onClick={continueWithGoogle}
-            className="w-full flex items-center justify-center gap-2 bg-white text-black border border-black/10 dark:bg-neutral-900 dark:text-white dark:border-white/10"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              alt="Google"
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-              className="h-5 w-5"
-            />
-            Lanjut dengan Google
-          </Button>
-          <p className="text-xs opacity-60 mt-4">Dengan melanjutkan, Anda menyetujui Ketentuan & Privasi kami.</p>
+      <Card className="w-full max-w-sm p-6 rounded-2xl text-center">
+        <div className="flex flex-col items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/favicon.ico" alt="logo" className="h-8 w-8 rounded mb-3" />
+          <span className="text-lg font-semibold mb-1">Ilkom Forum</span>
+          {isCallback ? (
+            <>
+              <h1 id="login-heading" className="text-xl font-semibold mb-2">Mengautentikasi…</h1>
+              <p className="text-sm opacity-70">Harap tunggu sebentar, kami sedang menyelesaikan proses masuk.</p>
+            </>
+          ) : (
+            <>
+              <h1 id="login-heading" className="text-xl font-semibold mb-2">Masuk</h1>
+              <p className="text-sm opacity-70 mb-6">Masuk untuk bergabung dalam diskusi</p>
+              <Button
+                onClick={continueWithGoogle}
+                className="w-full flex items-center justify-center gap-2 bg-white text-black border border-black/10 dark:bg-neutral-900 dark:text-white dark:border-white/10"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  alt="Google"
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  className="h-5 w-5"
+                />
+                Lanjut dengan Google
+              </Button>
+              <p className="text-xs opacity-60 mt-4">Dengan melanjutkan, Anda menyetujui Ketentuan & Privasi kami.</p>
+            </>
+          )}
         </div>
       </Card>
     </div>
