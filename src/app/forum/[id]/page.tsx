@@ -52,7 +52,7 @@ export default function PostDetailPage() {
       if (!pb.authStore.isValid) {
         return toast.error("Silakan masuk untuk berkomentar");
       }
-      const created = await pb.collection("comments").create({
+      const created = await pb.collection("comments").create<CommentRecord>({
         post: id,
         user: pb.authStore.record?.id,
         content,
@@ -60,9 +60,13 @@ export default function PostDetailPage() {
       });
       setContent("");
       setImageUrl("");
-      // update cache
-      qc.setQueryData<CommentRecord[] | undefined>(["comments", id], (old) => {
-        const newRec = created as CommentRecord;
+      // update cache with expand.user so UI shows username immediately
+      const authUser = pb.authStore.record as UserRecord | null;
+      const newRec: CommentRecord & { expand?: { user?: UserRecord } } = {
+        ...(created as CommentRecord),
+        expand: { user: authUser || undefined },
+      };
+      qc.setQueryData<((CommentRecord & { expand?: { user?: UserRecord } })[] ) | undefined>(["comments", id], (old) => {
         return old ? [...old, newRec] : [newRec];
       });
       toast.success("Komentar ditambahkan");
