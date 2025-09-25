@@ -24,6 +24,15 @@ function LoginInner() {
 
   useEffect(() => {
     const pb = getPB();
+    // Redirect immediately if session is already valid, and on any auth change
+    const unsub = pb.authStore.onChange(() => {
+      if (pb.authStore.isValid) {
+        // persist to cookie then navigate
+        saveAuthCookie(pb);
+        router.replace("/forum");
+      }
+    }, true);
+
     const code = params.get("code");
     const state = params.get("state");
     (async () => {
@@ -45,17 +54,19 @@ function LoginInner() {
               // persist updated auth to cookie for middleware/SSR
               saveAuthCookie(pb);
               localStorage.removeItem("pb_oauth2");
+              // Redirect right away after successful OAuth
+              router.replace("/forum");
+              return;
             }
           }
         }
       } catch (e) {
         console.error(e);
       }
-      // If already logged-in, go to homepage (/forum)
-      if (pb.authStore.isValid) {
-        router.replace("/forum");
-      }
+      // If already logged-in (no OAuth flow), go to homepage (/forum)
+      if (pb.authStore.isValid) router.replace("/forum");
     })();
+    return () => unsub();
   }, [router, params]);
 
   async function continueWithGoogle() {
