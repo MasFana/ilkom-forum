@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Button, Card } from "../../components/ui";
 import { getPB, saveAuthCookie, type UserRecord } from "../../lib/pocketbase";
 import { toast } from "sonner";
@@ -18,7 +18,7 @@ type ListAuthMethodsResponse = {
   authProviders?: OAuthProvider[]; // legacy field name support
 };
 
-export default function LoginPage() {
+function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -116,5 +116,13 @@ export default function LoginPage() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[70vh] flex items-center justify-center">Memuat…</div>}>
+      <LoginInner />
+    </Suspense>
   );
 }

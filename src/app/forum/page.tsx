@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Button, Card, Input } from "../../components/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Clock, Search } from "lucide-react";
@@ -8,7 +8,7 @@ import { usePosts, type SortMode } from "../../lib/hooks";
 import type { PostRecord, UserRecord } from "../../lib/pocketbase";
 import { calculateTotalPages } from "../../lib/utils";
 
-export default function ForumPage() {
+function ForumInner() {
   const params = useSearchParams();
   const router = useRouter();
   const q = params.get("q") || "";
@@ -114,5 +114,13 @@ export default function ForumPage() {
         <Button disabled={nextDisabled} onClick={() => setPage((p) => p + 1)} aria-label="Halaman berikutnya">Berikutnya</Button>
       </div>
     </div>
+  );
+}
+
+export default function ForumPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[70vh] flex items-center justify-center">Memuat…</div>}>
+      <ForumInner />
+    </Suspense>
   );
 }
