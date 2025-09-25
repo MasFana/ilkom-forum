@@ -11,15 +11,30 @@ export async function middleware(req: NextRequest) {
   const pb = new PocketBase(PB_URL);
   pb.authStore.loadFromCookie(req.headers.get("cookie") || "", COOKIE_KEY);
 
+  let invalidAuth = false;
   try {
     if (pb.authStore.isValid) {
       await pb.collection("users").authRefresh();
     }
   } catch {
-    // Don't clear on transient errors; keep existing session cookie
+    // If token is invalid/expired, mark as invalid and clear
+    // PocketBase throws ClientResponseError with status 401/403 for invalid auth
+    invalidAuth = true;
+    pb.authStore.clear();
   }
 
-  const res = isPublic || pb.authStore.isValid
+  // If the user hits /login while already authenticated, send them home
+  if (pathname === "/login" && pb.authStore.isValid && !invalidAuth) {
+    const res = NextResponse.redirect(new URL("/forum", req.url));
+    const isHttps = req.nextUrl.protocol === "https:";
+    res.headers.set(
+      "set-cookie",
+      pb.authStore.exportToCookie({ path: "/", sameSite: "Lax", secure: isHttps, httpOnly: false, maxAge: 60 * 60 * 24 * 30 }, COOKIE_KEY)
+    );
+    return res;
+  }
+
+  const res = (isPublic || (pb.authStore.isValid && !invalidAuth))
     ? NextResponse.next()
     : NextResponse.redirect(new URL("/login", req.url));
 

@@ -87,8 +87,8 @@ function LoginInner() {
       );
       const rawAuthUrl = google.authUrl || google.authURL; // support both casings
       if (!rawAuthUrl) throw new Error("Invalid provider auth URL");
-      // As per PocketBase docs, use the provider-provided URL and append our redirect URL directly
-      // PB will handle building the Google redirect_uri internally; we only supply our app's redirect_url once.
+      // As per PocketBase docs, append our redirect URL (encoded) to the provider authUrl
+      // The provider URL already contains the query param key, so we only append the encoded value
       const finalUrl = rawAuthUrl + encodeURIComponent(redirectUrl);
       window.location.href = finalUrl;
     } catch (e) {
