@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPB, saveAuthCookie, type UserRecord } from "../lib/pocketbase";
 import { Avatar, Button, Dropdown, DropdownItem, Input } from "./ui";
-import { LogOut, LogIn, PlusCircle, Menu, Search as SearchIcon } from "lucide-react";
+import { LogOut, LogIn, PlusCircle, Search as SearchIcon } from "lucide-react";
 
 export default function Header() {
     const router = useRouter();
     const [isAuth, setIsAuth] = useState(false);
     const [user, setUser] = useState<UserRecord | null>(null);
-    const [open, setOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [query, setQuery] = useState("");
     const pb = getPB();
@@ -35,9 +34,6 @@ export default function Header() {
     return (
         <div className="sticky top-0 z-30 backdrop-blur bg-white/70 dark:bg-neutral-950/70 border-b border-black/10 dark:border-white/10">
             <div className="mx-auto max-w-5xl px-4 py-3 flex items-center gap-3">
-                <button className="md:hidden p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
-                    <Menu className="h-5 w-5" />
-                </button>
                 <Link href="/forum" className="flex items-center gap-2 text-base font-bold tracking-tight" aria-label="Ilkom Forum beranda">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/favicon.ico" alt="logo" className="h-8 w-8 rounded" />
@@ -46,7 +42,7 @@ export default function Header() {
                 {/* Center search (desktop) */}
                 <form
                     role="search"
-                    onSubmit={(e) => { e.preventDefault(); window.location.href = `/forum?q=${encodeURIComponent(query)}`; }}
+                    onSubmit={(e) => { e.preventDefault(); router.push(`/forum?q=${encodeURIComponent(query)}`); }}
                     className="hidden md:flex flex-1 max-w-xl mx-4 items-center gap-2"
                 >
                     <Input
@@ -79,20 +75,6 @@ export default function Header() {
                     )}
                 </div>
             </div>
-            {/* Mobile menu drawer */}
-            {open ? (
-                <div className="md:hidden border-t border-black/10 dark:border-white/10">
-                    <div className="mx-auto max-w-5xl px-4 py-3 grid gap-3">
-                        <Link onClick={() => setOpen(false)} href="/forum" className="rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">Beranda</Link>
-                        {mounted && isAuth ? (
-                            <>
-                                <Link onClick={() => setOpen(false)} href="/new-post" className="rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">Tulis Post</Link>
-                                <Link onClick={() => setOpen(false)} href="/profile" className="rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/10">Profil</Link>
-                            </>
-                        ) : null}
-                    </div>
-                </div>
-            ) : null}
         </div>
     );
 }

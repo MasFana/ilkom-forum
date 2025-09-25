@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, Suspense } from "react";
 import { Button, Card } from "../../components/ui";
-import { getPB, saveAuthCookie, type UserRecord } from "../../lib/pocketbase";
+import { getPB, saveAuthCookie } from "../../lib/pocketbase";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -51,11 +51,9 @@ function LoginInner() {
       } catch (e) {
         console.error(e);
       }
-      // If already logged-in
+      // If already logged-in, go to homepage (/forum)
       if (pb.authStore.isValid) {
-        const username = (pb.authStore.record as UserRecord | null)?.username;
-        if (!username) router.replace("/profile");
-        else router.replace("/forum");
+        router.replace("/forum");
       }
     })();
   }, [router, params]);
