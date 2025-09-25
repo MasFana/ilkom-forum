@@ -14,7 +14,7 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.2
         version: 5.90.2(react@19.1.0)
-      clsx:
+      clsx:hy 
         specifier: ^2.1.1
         version: 2.1.1
       framer-motion:

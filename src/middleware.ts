@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
       await pb.collection("users").authRefresh();
     }
   } catch {
-    pb.authStore.clear();
+    // Don't clear on transient errors; keep existing session cookie
   }
 
   const res = isPublic || pb.authStore.isValid
@@ -24,9 +24,12 @@ export async function middleware(req: NextRequest) {
     : NextResponse.redirect(new URL("/login", req.url));
 
   // set updated cookie back with hardened defaults
+  const isHttps = req.nextUrl.protocol === "https:";
+  // Use httpOnly: false so the client can refresh the cookie after OAuth/login
+  // Secure only when using HTTPS; on local dev (http) secure cookies won't be stored by the browser
   res.headers.set(
     "set-cookie",
-    pb.authStore.exportToCookie({ path: "/", sameSite: "Lax", secure: true }, COOKIE_KEY)
+    pb.authStore.exportToCookie({ path: "/", sameSite: "Lax", secure: isHttps, httpOnly: false, maxAge: 60 * 60 * 24 * 30 }, COOKIE_KEY)
   );
   return res;
 }

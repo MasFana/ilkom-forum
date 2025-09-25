@@ -26,7 +26,8 @@ export function getPB(): PocketBase {
 export function saveAuthCookie(pb: PocketBase) {
   // expose cookie to browser (httpOnly false)
   const isHttps = typeof window !== "undefined" ? window.location.protocol === "https:" : true;
-  const cookie = pb.authStore.exportToCookie({ httpOnly: false, path: "/", sameSite: "Lax", secure: isHttps }, COOKIE_KEY);
+  // Persist for ~30 days so reloads don't drop the session
+  const cookie = pb.authStore.exportToCookie({ httpOnly: false, path: "/", sameSite: "Lax", secure: isHttps, maxAge: 60 * 60 * 24 * 30 }, COOKIE_KEY);
   if (typeof document !== "undefined") {
     document.cookie = cookie;
   }
