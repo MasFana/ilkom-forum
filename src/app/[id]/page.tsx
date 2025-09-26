@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { MessageSquare, Edit, Trash2 } from "lucide-react";
 import { timeAgo } from "../../lib/utils";
 import { CommentItem } from "../../components/comment-item";
+import Link from "next/link";
 
 export default function PostDetailPage() {
   const router = useRouter();
@@ -85,7 +86,7 @@ export default function PostDetailPage() {
       await pb.collection("posts").delete(post.id);
       toast.success("Post dihapus");
       router.push("/");
-      
+
     } catch (e) {
       console.error(e);
       toast.error("Gagal menghapus post");
@@ -122,7 +123,12 @@ export default function PostDetailPage() {
     return <Card className="p-6 animate-pulse h-40" />;
   }
   if (isError || !post) {
-    return <Card className="p-6 text-sm opacity-70">Gagal memuat post.</Card>;
+    return <div className="p-6 text-sm h-full animate-pulse flex flex-col items-center justify-center text-center">
+      <div>
+        <Image width={500} height={500} src="/404.webp" alt="404" />
+        <Link href="/" className="text-3xl pt-4">Kembali ke Home</Link>
+      </div>
+    </div>;
   }
 
   return (
