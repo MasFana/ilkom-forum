@@ -102,11 +102,10 @@ function LoginInner() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center" aria-labelledby="login-heading">
-      <Card className="w-full max-w-sm p-6 rounded-2xl text-center">
+      <Card className="w-full max-w-sm p-4 rounded-2xl text-center">
         <div className="flex flex-col items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/favicon.ico" alt="logo" className="h-8 w-8 rounded mb-3" />
-          <span className="text-lg font-semibold mb-1">Ilkom Forum</span>
+          <img src="/favicon.ico" alt="logo" className=" border border-black/5 dark:border-white/5 rounded-xl mb-4" />
           {isCallback ? (
             <>
               <h1 id="login-heading" className="text-xl font-semibold mb-2">Mengautentikasi…</h1>
