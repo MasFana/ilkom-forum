@@ -1,17 +1,18 @@
 "use client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import { getPB } from "../../../lib/pocketbase";
-import type { PostRecord, CommentRecord, UserRecord } from "../../../lib/pocketbase";
-import { Button, Card, Input, Textarea, Avatar } from "../../../components/ui";
+import { getPB } from "../../lib/pocketbase";
+import type { PostRecord, CommentRecord, UserRecord } from "../../lib/pocketbase";
+import { Button, Card, Input, Textarea, Avatar } from "../../components/ui";
 import { useState } from "react";
 import { toast } from "sonner";
 import { MessageSquare, Edit, Trash2 } from "lucide-react";
-import { timeAgo } from "../../../lib/utils";
-import { CommentItem } from "../../../components/comment-item";
+import { timeAgo } from "../../lib/utils";
+import { CommentItem } from "../../components/comment-item";
 
 export default function PostDetailPage() {
+  const router = useRouter();
   const params = useParams<{ id: string }>();
   const id = params.id;
   const qc = useQueryClient();
@@ -83,7 +84,8 @@ export default function PostDetailPage() {
     try {
       await pb.collection("posts").delete(post.id);
       toast.success("Post dihapus");
-      window.location.href = "/forum";
+      router.push("/");
+      
     } catch (e) {
       console.error(e);
       toast.error("Gagal menghapus post");

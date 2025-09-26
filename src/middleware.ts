@@ -25,7 +25,7 @@ export async function middleware(req: NextRequest) {
 
   // If the user hits /login while already authenticated, send them home
   if (pathname === "/login" && pb.authStore.isValid && !invalidAuth) {
-    const res = NextResponse.redirect(new URL("/forum", req.url));
+    const res = NextResponse.redirect(new URL("/", req.url));
     const isHttps = req.nextUrl.protocol === "https:";
     res.headers.set(
       "set-cookie",

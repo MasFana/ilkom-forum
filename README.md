@@ -28,8 +28,8 @@ Aplikasi akan berjalan di http://localhost:3000.
 ## Rute utama
 
 - `/login` – Google sign-in dan callback
-- `/forum` – daftar post; mode: Terbaru (sort -created) dan Populer (3 hari terakhir, urut komentar); dukungan `?q=` untuk pencarian
-- `/forum/[id]` – detail post dan komentar
+- `/` – daftar post; mode: Terbaru (sort -created) dan Populer (3 hari terakhir, urut komentar); dukungan `?q=` untuk pencarian
+- `/[id]` – detail post dan komentar
 - `/new` – membuat post baru
 - `/profile` – set username dan avatar
 

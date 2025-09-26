@@ -25,7 +25,7 @@ export default function NewPostPage() {
         user: pb.authStore.record?.id,
       });
       toast.success("Post berhasil dibuat");
-      router.replace(`/forum/${rec.id}`);
+      router.replace(`/${rec.id}`);
     } catch (e) {
       console.error(e);
       toast.error("Gagal membuat post");
@@ -38,7 +38,10 @@ export default function NewPostPage() {
       <Input aria-label="Judul" placeholder="Judul" value={title} onChange={(e) => setTitle(e.target.value)} />
       <Textarea aria-label="Isi (opsional)" placeholder="Isi (opsional)" rows={6} value={content} onChange={(e) => setContent(e.target.value)} />
       <Input aria-label="URL Gambar (opsional)" placeholder="URL Gambar (opsional)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+      <div className="flex justify-end">
       <Button onClick={createPost} disabled={!title.trim() || !isAuth} title={!isAuth ? "Perlu masuk" : undefined}>Terbitkan</Button>
+      </div>  
+    
     </Card>
   );
 }

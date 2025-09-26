@@ -30,7 +30,7 @@ function LoginInner() {
       if (pb.authStore.isValid) {
         // persist to cookie then navigate
         saveAuthCookie(pb);
-        window.location.replace("/forum");
+        router.push("/");
       }
     }, true);
 
@@ -56,7 +56,7 @@ function LoginInner() {
               saveAuthCookie(pb);
               localStorage.removeItem("pb_oauth2");
               // Redirect right away after successful OAuth
-              window.location.replace("/forum");
+              router.push("/");
               return;
             }
           }
@@ -64,8 +64,8 @@ function LoginInner() {
       } catch (e) {
         console.error(e);
       }
-      // If already logged-in (no OAuth flow), go to homepage (/forum)
-      if (pb.authStore.isValid) window.location.replace("/forum");
+      // If already logged-in (no OAuth flow), go to homepage (/)
+      if (pb.authStore.isValid) window.location.replace("/");
     })();
     return () => unsub();
   }, [router, params]);
@@ -91,7 +91,8 @@ function LoginInner() {
       // As per PocketBase docs, append our redirect URL (encoded) to the provider authUrl
       // The provider URL already contains the query param key, so we only append the encoded value
       const finalUrl = rawAuthUrl + encodeURIComponent(redirectUrl);
-      window.location.href = finalUrl;
+      router.push(finalUrl);
+  
     } catch (e) {
       console.error(e);
       const msg = e instanceof Error ? e.message : "Failed to authenticate with Google";
