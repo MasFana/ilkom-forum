@@ -31,7 +31,7 @@ function CommentItemInner({ comment, onDeleted }: CommentItemProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-black/10 dark:border-white/10 p-3">
+    <div className=" border-l bg-black/2 dark:bg-white/2 border-black/10 dark:border-white/10 p-3">
       <div className="flex items-start gap-3">
         <Avatar alt={author?.username} />
         <div className="flex-1 min-w-0">
@@ -50,7 +50,7 @@ function CommentItemInner({ comment, onDeleted }: CommentItemProps) {
           <button
             type="button"
             onClick={handleDelete}
-            className="ml-auto px-2 py-1 rounded-lg text-xs inline-flex items-center gap-1 hover:bg-black/5 dark:hover:bg-white/10"
+            className="ml-auto my-auto px-2 py-1 rounded-lg text-xs inline-flex items-center gap-1 hover:bg-black/5 dark:hover:bg-white/10"
             aria-label="Hapus komentar"
             title="Hapus komentar"
           >

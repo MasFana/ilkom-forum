@@ -30,7 +30,7 @@ Aplikasi akan berjalan di http://localhost:3000.
 - `/login` – Google sign-in dan callback
 - `/forum` – daftar post; mode: Terbaru (sort -created) dan Populer (3 hari terakhir, urut komentar); dukungan `?q=` untuk pencarian
 - `/forum/[id]` – detail post dan komentar
-- `/new-post` – membuat post baru
+- `/new` – membuat post baru
 - `/profile` – set username dan avatar
 
 Semua rute dilindungi middleware kecuali `/login`.

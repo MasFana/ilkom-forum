@@ -66,7 +66,7 @@ export default function PostDetailPage() {
         ...(created as CommentRecord),
         expand: { user: authUser || undefined },
       };
-      qc.setQueryData<((CommentRecord & { expand?: { user?: UserRecord } })[] ) | undefined>(["comments", id], (old) => {
+      qc.setQueryData<((CommentRecord & { expand?: { user?: UserRecord } })[]) | undefined>(["comments", id], (old) => {
         return old ? [...old, newRec] : [newRec];
       });
       toast.success("Komentar ditambahkan");
@@ -183,8 +183,18 @@ export default function PostDetailPage() {
         )}
       </Card>
 
-      <Card className="p-4">
+      <Card className="p-4 border-none shadow-none">
         <h2 className="text-lg font-semibold mb-3 inline-flex items-center gap-2"><MessageSquare className="h-5 w-5" /> Komentar</h2>
+
+        <div className="space-y-2 pb-4">
+          <Textarea className="rounded-none border-t-0 border-x-0 " placeholder="Tulis komentar Anda..." value={content} onChange={(e) => setContent(e.target.value)} />
+          <Input className="rounded-none border-t-0 border-x-0" placeholder="URL gambar (opsional)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+          <div className="flex justify-end pt-2">
+            <Button onClick={addComment} disabled={!content.trim()}>Kirim</Button>
+          </div>
+
+        </div>
+
         <div className="space-y-3">
           {isLoadingComments ? (
             <div className="space-y-2">
@@ -208,14 +218,7 @@ export default function PostDetailPage() {
         </div>
       </Card>
 
-      <Card className="p-4">
-        <h3 className="font-medium mb-2">Tambah komentar</h3>
-        <div className="space-y-2">
-          <Textarea placeholder="Tulis komentar Anda..." value={content} onChange={(e) => setContent(e.target.value)} />
-          <Input placeholder="URL gambar (opsional)" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-          <Button onClick={addComment} disabled={!content.trim()}>Kirim</Button>
-        </div>
-      </Card>
+
     </div>
   );
 }

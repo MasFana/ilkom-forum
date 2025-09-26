@@ -117,7 +117,7 @@ function LoginInner() {
               <p className="text-sm opacity-70 mb-6">Masuk untuk bergabung dalam diskusi</p>
               <Button
                 onClick={continueWithGoogle}
-                className="w-full flex items-center justify-center gap-2 bg-white text-black border border-black/10 dark:bg-neutral-900 dark:text-white dark:border-white/10"
+                className="w-full flex items-center justify-center gap-2 bg-white text-black border border-black/10 dark:bg-background dark:text-white dark:border-white/10"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

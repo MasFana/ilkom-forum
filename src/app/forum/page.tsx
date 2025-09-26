@@ -43,9 +43,9 @@ function ForumInner() {
   }, [page, totalPages]);
 
   return (
-    <div className="flex flex-col min-h-screen space-y-4 px-3 sm:px-0" aria-labelledby="forum-heading">
+    <div className="flex flex-col min-h-screen space-y-4" aria-labelledby="forum-heading">
       <h1 id="forum-heading" className="sr-only">Forum</h1>
-      <div className="flex flex-wrap items-center gap-3 justify-between">
+      <div className="flex flex-wrap items-center gap-3 justify-between px-4">
         {/* Mobile-only search to avoid duplicate with header search on desktop */}
         <form
           role="search"
@@ -70,7 +70,8 @@ function ForumInner() {
           </div>
           <Button type="submit" disabled={isFetching} aria-label="Cari">{<Search className="h-4 w-4 mr-1" />}Cari</Button>
         </form>
-        <div className="flex items-center gap-1 rounded-xl border border-black/10 dark:border-white/10 p-0 bg-white/60 dark:bg-neutral-900/60 w-full sm:w-auto shrink-0" role="tablist" aria-label="Urutkan">
+
+        <div className="flex items-center gap-1 rounded-xl border border-black/10 dark:border-white/10 p-0 bg-white/60 dark:bg-background/60 w-full sm:w-auto shrink-0" role="tablist" aria-label="Urutkan">
           <button
             onClick={() => setSort("latest")}
             className={`px-4 py-2 rounded-lg text-sm inline-flex items-center gap-1 ${sort === "latest" ? "bg-black text-white dark:bg-white dark:text-black" : "opacity-80 hover:opacity-100"}`}
@@ -88,6 +89,7 @@ function ForumInner() {
             Populer
           </button>
         </div>
+
       </div>
 
       <div className="flex-1">

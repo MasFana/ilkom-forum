@@ -20,7 +20,7 @@ export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
   return (
     <div
       className={cn(
-        "rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-sm",
+        "rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-background shadow-sm",
         className
       )}
       {...props}
@@ -117,7 +117,7 @@ export function Dropdown({
       {open ? (
         <div
           role="menu"
-          className="absolute right-0 mt-2 min-w-[220px] rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-900 p-2 shadow-lg z-50"
+          className="absolute right-0 mt-2 min-w-[220px] rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-background p-2 shadow-lg z-50"
         >
           {children}
         </div>
