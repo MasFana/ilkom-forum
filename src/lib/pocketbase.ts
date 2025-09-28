@@ -72,3 +72,29 @@ export type PostListItem = {
   post: PostRecord & { expand?: { user?: UserRecord } };
   count: number;
 };
+
+// Optional: Type for postsView (aggregated view)
+export type PostViewRecord = {
+  id: string;
+  created: string;
+  image_url?: string;
+  title: string;
+  content?: string;
+  username: string;
+  totalComments: number;
+};
+
+export type NotificationRecord = RecordModel & {
+  id: string;
+  post?: string;
+  comment?: string;
+  owner?: string;
+  is_read?: boolean;
+  created: string;
+  updated: string;
+  expand?: {
+    post?: PostRecord;
+    comment?: CommentRecord;
+    owner?: UserRecord;
+  };
+};

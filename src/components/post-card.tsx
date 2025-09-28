@@ -18,7 +18,7 @@ function PostCardInner({ post, commentCount = 0 }: PostCardProps) {
 
   return (
     <article className="py-3 sm:py-4">
-      <Link href={`/${post.id}`} className="block rounded-xl px-3 sm:px-4 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label={`Buka post ${post.title}`}>
+      <Link href={`/${post.id}`} className="block rounded-xl px-4 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label={`Buka post ${post.title}`}>
         <div>
           <div className="flex items-center gap-2 text-xs opacity-70">
             <Avatar alt={author?.username} className="h-5 w-5" />

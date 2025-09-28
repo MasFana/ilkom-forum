@@ -133,7 +133,7 @@ export default function PostDetailPage() {
 
   return (
     <div className="space-y-4">
-      <Card className="p-6">
+      <Card className="p-2 px-4">
         {/* Title first, then meta + actions */}
         {isEditing ? (
           <Input

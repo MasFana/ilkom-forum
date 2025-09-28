@@ -43,7 +43,7 @@ function ForumInner() {
   }, [page, totalPages]);
 
   return (
-    <div className="flex flex-col min-h-screen space-y-4" aria-labelledby="forum-heading">
+    <div className="flex flex-col min-h-screen space-y-4 pt-4" aria-labelledby="forum-heading">
       <h1 id="forum-heading" className="sr-only">Forum</h1>
       <div className="flex flex-wrap items-center gap-3 justify-between px-4">
         {/* Mobile-only search to avoid duplicate with header search on desktop */}
@@ -103,9 +103,17 @@ function ForumInner() {
           <Card className="p-6 text-sm opacity-70">Tidak ada postingan.</Card>
         ) : (
           <div className="divide-y divide-black/10 dark:divide-white/10">
-            {items.map(({ post, count }) => (
-              <PostCard key={post.id} post={post as PostRecord & { expand?: { user?: UserRecord } }} commentCount={count} />
-            ))}
+            {items.map((item) => {
+              const postData = {
+                id: item.id,
+                title: item.title,
+                content: item.content,
+                image_url: item.image_url,
+                created: item.created,
+                expand: { user: ({ username: item.username } as unknown) as UserRecord },
+              } as unknown as PostRecord & { expand?: { user?: UserRecord } };
+              return <PostCard key={item.id} post={postData} commentCount={item.totalComments} />;
+            })}
           </div>
         )}
       </div>
