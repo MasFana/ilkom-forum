@@ -180,7 +180,7 @@ export default function PostDetailPage() {
           <>
             {post.image_url ? (
               <div className="mt-3 overflow-hidden rounded-xl">
-                <Image src={post.image_url} alt={post.title} width={1200} height={800} className="h-auto w-full object-cover" />
+                <Image src={post.image_url} alt={post.title} width={1200} height={200} className="h-auto w-full object-cover" />
               </div>
             ) : null}
             {post.content ? <p className="mt-3 whitespace-pre-wrap break-words">{post.content}</p> : null}

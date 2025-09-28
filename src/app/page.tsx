@@ -45,6 +45,7 @@ function ForumInner() {
     if (totalPages > 0 && page > totalPages) {
       setPage(totalPages);
     }
+    handleScrollTop();
   }, [page, totalPages]);
 
   return (
@@ -124,9 +125,9 @@ function ForumInner() {
       </div>
       {/* Pagination controls */}
       <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-        <Button disabled={prevDisabled} onClick={() => { setPage((p) => Math.max(1, p - 1)); handleScrollTop(); }} aria-label="Halaman sebelumnya">Sebelumnya</Button>
+        <Button disabled={prevDisabled} onClick={() => { setPage((p) => Math.max(1, p - 1)) }} aria-label="Halaman sebelumnya">Sebelumnya</Button>
         <span className="text-sm opacity-70" aria-live="polite">Halaman {page} / {totalPages}</span>
-        <Button disabled={nextDisabled} onClick={() => { setPage((p) => p + 1); handleScrollTop(); }} aria-label="Halaman berikutnya">Berikutnya</Button>
+        <Button disabled={nextDisabled} onClick={() => { setPage((p) => p + 1) }} aria-label="Halaman berikutnya">Berikutnya</Button>
       </div>
     </div>
   );

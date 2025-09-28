@@ -5,7 +5,7 @@ import type { PostRecord, UserRecord } from "../lib/pocketbase";
 import { Avatar } from "./ui";
 import { MessageSquare } from "lucide-react";
 import { timeAgo } from "../lib/utils";
-
+import Image from "next/image";
 export type PostWithAuthor = PostRecord & { expand?: { user?: UserRecord } };
 
 type PostCardProps = {
@@ -29,8 +29,8 @@ function PostCardInner({ post, commentCount = 0 }: PostCardProps) {
           <h2 className="text-base font-semibold mt-2 line-clamp-2">{post.title}</h2>
         </div>
         {post.image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={post.image_url} alt="pratinjau" className="mt-2 w-full max-h-96 object-cover rounded-lg" loading="lazy" />
+          <Image src={post.image_url} layout="intrinsic"
+            width={1200} height={200} alt="pratinjau" className="mt-2 w-full max-h-96 object-cover rounded-lg" loading="lazy" />
         ) : null}
         {post.content ? (
           <p className="mt-2 text-sm opacity-80 line-clamp-3">{post.content}</p>

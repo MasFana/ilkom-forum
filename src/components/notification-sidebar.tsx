@@ -13,9 +13,9 @@ export default function NotificationSidebar() {
       ariaLabel="Notifikasi"
       hideChevron={true}
       label={
-        <span className="inline-flex items-center w-full md:w-auto">
+        <span className="inline-flex relative items-center w-full md:w-auto">
           <Bell className="h-6 w-6" />
-          {unreadCount > 0 ? <span className="ml-1 inline-block h-2 w-2 rounded-full bg-red-500 animate-pulse" /> : null}
+          {unreadCount > 0 ? <span className="ml-1 inline-block h-2 w-2 rounded-full bg-red-500 animate-pulse absolute top-0 right-0" /> : null}
         </span>
       }
     >
@@ -31,7 +31,6 @@ export default function NotificationSidebar() {
           ) : (
             notifications.map((n, idx) => {
               // build avatar url if available
-              const avatarUrl = n.expand?.comment?.user;
               const title = n.expand?.post?.title ? `Komentar di ${n.expand.post.title}` : n.post ? `Post ${n.post}` : "Notifikasi";
               const body = n.expand?.comment?.content ?? "";
               return (
@@ -51,7 +50,7 @@ export default function NotificationSidebar() {
                     }}
                   >
                     <div className="flex items-start gap-3">
-                      <Avatar src={avatarUrl} alt={n.expand?.owner?.username} className="h-9 w-9" />
+                      <Avatar alt={n.expand?.comment?.user} className="h-9 w-9" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                           <div className="text-sm font-medium truncate">{title}</div>

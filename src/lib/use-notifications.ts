@@ -44,15 +44,8 @@ export function useNotifications() {
         fetchNotifications();
         // subscribe to realtime notifications for this collection
         if (!pb.authStore.isValid) return;
-        const userId = ((pb.authStore.model as unknown) as { id?: string })?.id;
 
-        const onRealtime = (event: unknown) => {
-            const rec = (event as { record?: unknown })?.record ?? event;
-            // only update if it belongs to current user
-            if (!rec) return;
-            const owner = (rec as { owner?: string }).owner;
-            if (owner !== userId) return;
-            // if new or updated, refetch (simple and safe)
+        const onRealtime = () => {
             fetchNotifications();
         };
 
@@ -104,6 +97,7 @@ export function useNotifications() {
                 await pb.collection("notifications").delete(n.id);
             });
             setNotifications([]);
+            setUnreadCount(0);
         } catch (e) {
             console.error("deleteNotification", e);
         }
