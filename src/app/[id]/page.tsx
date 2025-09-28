@@ -120,7 +120,7 @@ export default function PostDetailPage() {
   }
 
   if (isLoading) {
-    return <Card className="p-6 animate-pulse h-40" />;
+    return <Card className="p-6 animate-pulse h-60 bg-neutral-100 dark:bg-neutral-900" />;
   }
   if (isError || !post) {
     return <div className="p-6 text-sm h-full animate-pulse flex flex-col items-center justify-center text-center">
@@ -133,7 +133,7 @@ export default function PostDetailPage() {
 
   return (
     <div className="space-y-4">
-      <Card className="p-2 px-4">
+      <Card className="p-4 px-4">
         {/* Title first, then meta + actions */}
         {isEditing ? (
           <Input

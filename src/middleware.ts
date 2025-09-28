@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import PocketBase from "pocketbase";
 import { COOKIE_KEY, PB_URL } from "./lib/config";
 
-const PUBLIC_PATHS = ["/login", "/_next", "/favicon.ico", "/public", "/api" /* allow apis */];
+const PUBLIC_PATHS = ["/login", "/_next", "/favicon.ico", "/public", "/api", "/"/* allow apis */];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

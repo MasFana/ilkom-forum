@@ -62,7 +62,7 @@ export default function RootLayout({
       <body className={`antialiased bg-background text-foreground min-h-screen`}>
         <Providers>
           <Header />
-          <div className="mx-auto max-w-3xl min-h-screen">
+          <div className="mx-auto max-w-3xl min-h-screen py-4">
             <main className="min-h-screen">{children}</main>
             <Footer />
           </div>

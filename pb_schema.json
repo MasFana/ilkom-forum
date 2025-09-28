@@ -1,7 +1,7 @@
 [
   {
     "id": "_pb_users_auth_",
-    "listRule": "",
+    "listRule": null,
     "viewRule": "",
     "createRule": "",
     "updateRule": "id = @request.auth.id",
@@ -159,11 +159,8 @@
       "enabled": true
     },
     "passwordAuth": {
-      "enabled": true,
-      "identityFields": [
-        "email",
-        "username"
-      ]
+      "enabled": false,
+      "identityFields": ["email", "username"]
     },
     "mfa": {
       "enabled": false,
@@ -208,10 +205,69 @@
     }
   },
   {
+    "id": "pbc_1842924180",
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "name": "bans",
+    "type": "base",
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "text3208210256",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "exceptDomains": null,
+        "hidden": false,
+        "id": "email3885137012",
+        "name": "email",
+        "onlyDomains": null,
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "email"
+      },
+      {
+        "hidden": false,
+        "id": "autodate2990389176",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "autodate3332085495",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ],
+    "indexes": [],
+    "system": false
+  },
+  {
     "id": "comments_collection",
     "listRule": "",
     "viewRule": "",
-    "createRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && user = @request.auth.id && @request.auth.email !~ @collection.bans.email",
     "updateRule": "user = @request.auth.id",
     "deleteRule": "user = @request.auth.id",
     "name": "comments",
@@ -297,10 +353,93 @@
     "system": false
   },
   {
+    "id": "pbc_3905696460",
+    "listRule": "post.user = @request.auth.id",
+    "viewRule": "post.user = @request.auth.id",
+    "createRule": null,
+    "updateRule": "post.user = @request.auth.id",
+    "deleteRule": "post.user = @request.auth.id",
+    "name": "notifications",
+    "type": "base",
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "text3208210256",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": true,
+        "collectionId": "posts_collection",
+        "hidden": false,
+        "id": "relation1519021197",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "post",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": true,
+        "collectionId": "comments_collection",
+        "hidden": false,
+        "id": "relation2490651244",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "comment",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "bool228880198",
+        "name": "is_read",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
+        "id": "autodate2990389176",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "autodate3332085495",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ],
+    "indexes": [],
+    "system": false
+  },
+  {
     "id": "posts_collection",
-    "listRule": "",
+    "listRule": "@request.auth.id != ''",
     "viewRule": "",
-    "createRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && user = @request.auth.id && @request.auth.email !~ @collection.bans.email",
     "updateRule": "user = @request.auth.id",
     "deleteRule": "user = @request.auth.id",
     "name": "posts",
@@ -395,5 +534,109 @@
     ],
     "indexes": [],
     "system": false
+  },
+  {
+    "id": "pbc_3760890569",
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "name": "postsView",
+    "type": "view",
+    "fields": [
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "text3208210256",
+        "max": 0,
+        "min": 0,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "_clone_nTza",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "exceptDomains": null,
+        "hidden": false,
+        "id": "_clone_Lqg7",
+        "name": "image_url",
+        "onlyDomains": null,
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "url"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "_clone_xkQg",
+        "max": 255,
+        "min": 3,
+        "name": "title",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "_clone_irel",
+        "max": 5000,
+        "min": 0,
+        "name": "content",
+        "pattern": "",
+        "presentable": true,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "autogeneratePattern": "users[0-9]{6}",
+        "hidden": false,
+        "id": "_clone_lN2P",
+        "max": 150,
+        "min": 3,
+        "name": "username",
+        "pattern": "^[\\w][\\w\\.\\-]*$",
+        "presentable": false,
+        "primaryKey": false,
+        "required": true,
+        "system": false,
+        "type": "text"
+      },
+      {
+        "hidden": false,
+        "id": "number649901171",
+        "max": null,
+        "min": null,
+        "name": "totalComments",
+        "onlyInt": false,
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "number"
+      }
+    ],
+    "indexes": [],
+    "system": false,
+    "viewQuery": "SELECT \n  posts.id,\n  posts.created,\n  posts.image_url,\n  posts.title,\n  posts.content,\n  users.username,\n  COUNT(comments.id) AS totalComments\nFROM posts\nJOIN users ON posts.user = users.id\nLEFT JOIN comments ON comments.post = posts.id\nGROUP BY \n  posts.id,\n  posts.created,\n  posts.image_url,\n  posts.title,\n  posts.content,\n  users.username;\n"
   }
 ]

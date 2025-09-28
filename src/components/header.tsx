@@ -32,7 +32,7 @@ export default function Header() {
 
     return (
         <div className="sticky top-0 z-30 backdrop-blur bg-white/70 dark:bg-neutral-950/70 border-b border-black/10 dark:border-white/10">
-            <div className="mx-auto max-w-6xl px-4 py-2 flex items-center gap-3">
+            <div className="mx-auto max-w-6xl p-4 flex items-center gap-3">
                 <Link href="/" className="flex items-center gap-2 text-base font-bold tracking-tight" aria-label="Ilkom Forum beranda">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/favicon.ico" alt="logo" className="h-8 w-8 rounded" />
@@ -50,7 +50,7 @@ export default function Header() {
                             placeholder="Cari di forum..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            className="w-full pr-10"
+                            className="w-full pr-10 py-2"
                         />
                         <Button
                             type="submit"
@@ -82,7 +82,7 @@ export default function Header() {
                             </Dropdown>
                         </>
                     ) : (
-                        <Link href="/login"><Button className="gap-1"><LogIn className="h-4 w-4" />Masuk</Button></Link>
+                        <Link href="/login"><Button className="gap-1 bg-transparent py-2 px-2"><LogIn className="h-4 w-4" />Masuk</Button></Link>
                     )}
                 </div>
             </div>
