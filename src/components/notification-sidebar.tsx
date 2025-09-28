@@ -34,7 +34,7 @@ export default function NotificationSidebar() {
           ) : (
             notifications.map((n, idx) => {
               // build avatar url if available
-              const avatarUrl = n.expand?.owner?.avatar ? pb.files.getUrl(n.expand.owner as any, n.expand.owner.avatar) : undefined;
+              const avatarUrl = n.expand?.comment?.user;
               const title = n.expand?.post?.title ? `Komentar di ${n.expand.post.title}` : n.post ? `Post ${n.post}` : "Notifikasi";
               const body = n.expand?.comment?.content ?? "";
               return (

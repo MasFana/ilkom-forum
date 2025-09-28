@@ -1,5 +1,88 @@
 [
   {
+    "id": "pbc_3905696460",
+    "listRule": "post.user = @request.auth.id",
+    "viewRule": "post.user = @request.auth.id",
+    "createRule": null,
+    "updateRule": "post.user = @request.auth.id",
+    "deleteRule": "post.user = @request.auth.id",
+    "name": "notifications",
+    "type": "base",
+    "fields": [
+      {
+        "autogeneratePattern": "[a-z0-9]{15}",
+        "hidden": false,
+        "id": "text3208210256",
+        "max": 15,
+        "min": 15,
+        "name": "id",
+        "pattern": "^[a-z0-9]+$",
+        "presentable": false,
+        "primaryKey": true,
+        "required": true,
+        "system": true,
+        "type": "text"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "posts_collection",
+        "hidden": false,
+        "id": "relation1519021197",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "post",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "comments_collection",
+        "hidden": false,
+        "id": "relation2490651244",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "comment",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "hidden": false,
+        "id": "bool228880198",
+        "name": "is_read",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
+        "id": "autodate2990389176",
+        "name": "created",
+        "onCreate": true,
+        "onUpdate": false,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      },
+      {
+        "hidden": false,
+        "id": "autodate3332085495",
+        "name": "updated",
+        "onCreate": true,
+        "onUpdate": true,
+        "presentable": false,
+        "system": false,
+        "type": "autodate"
+      }
+    ],
+    "indexes": [],
+    "system": false
+  },
+  {
     "id": "_pb_users_auth_",
     "listRule": null,
     "viewRule": "",
@@ -160,10 +243,7 @@
     },
     "passwordAuth": {
       "enabled": false,
-      "identityFields": [
-        "email",
-        "username"
-      ]
+      "identityFields": ["email", "username"]
     },
     "mfa": {
       "enabled": false,
@@ -356,102 +436,6 @@
     "system": false
   },
   {
-    "id": "pbc_3905696460",
-    "listRule": "owner = @request.auth.id",
-    "viewRule": "owner = @request.auth.id",
-    "createRule": null,
-    "updateRule": "owner = @request.auth.id",
-    "deleteRule": "owner = @request.auth.id",
-    "name": "notifications",
-    "type": "base",
-    "fields": [
-      {
-        "autogeneratePattern": "[a-z0-9]{15}",
-        "hidden": false,
-        "id": "text3208210256",
-        "max": 15,
-        "min": 15,
-        "name": "id",
-        "pattern": "^[a-z0-9]+$",
-        "presentable": false,
-        "primaryKey": true,
-        "required": true,
-        "system": true,
-        "type": "text"
-      },
-      {
-        "cascadeDelete": false,
-        "collectionId": "posts_collection",
-        "hidden": false,
-        "id": "relation1519021197",
-        "maxSelect": 1,
-        "minSelect": 0,
-        "name": "post",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "relation"
-      },
-      {
-        "cascadeDelete": false,
-        "collectionId": "comments_collection",
-        "hidden": false,
-        "id": "relation2490651244",
-        "maxSelect": 1,
-        "minSelect": 0,
-        "name": "comment",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "relation"
-      },
-      {
-        "cascadeDelete": false,
-        "collectionId": "_pb_users_auth_",
-        "hidden": false,
-        "id": "relation3479234172",
-        "maxSelect": 1,
-        "minSelect": 0,
-        "name": "owner",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "relation"
-      },
-      {
-        "hidden": false,
-        "id": "bool228880198",
-        "name": "is_read",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "bool"
-      },
-      {
-        "hidden": false,
-        "id": "autodate2990389176",
-        "name": "created",
-        "onCreate": true,
-        "onUpdate": false,
-        "presentable": false,
-        "system": false,
-        "type": "autodate"
-      },
-      {
-        "hidden": false,
-        "id": "autodate3332085495",
-        "name": "updated",
-        "onCreate": true,
-        "onUpdate": true,
-        "presentable": false,
-        "system": false,
-        "type": "autodate"
-      }
-    ],
-    "indexes": [],
-    "system": false
-  },
-  {
     "id": "posts_collection",
     "listRule": "@request.auth.id != ''",
     "viewRule": "@request.auth.id != ''",
@@ -577,7 +561,7 @@
       },
       {
         "hidden": false,
-        "id": "_clone_GjuM",
+        "id": "_clone_I2Oz",
         "name": "created",
         "onCreate": true,
         "onUpdate": false,
@@ -588,7 +572,7 @@
       {
         "exceptDomains": null,
         "hidden": false,
-        "id": "_clone_pOAC",
+        "id": "_clone_j0Bo",
         "name": "image_url",
         "onlyDomains": null,
         "presentable": false,
@@ -599,7 +583,7 @@
       {
         "autogeneratePattern": "",
         "hidden": false,
-        "id": "_clone_YQeU",
+        "id": "_clone_FZQe",
         "max": 255,
         "min": 3,
         "name": "title",
@@ -613,7 +597,7 @@
       {
         "autogeneratePattern": "",
         "hidden": false,
-        "id": "_clone_38b8",
+        "id": "_clone_XKWP",
         "max": 5000,
         "min": 0,
         "name": "content",
@@ -627,7 +611,7 @@
       {
         "autogeneratePattern": "users[0-9]{6}",
         "hidden": false,
-        "id": "_clone_q2Uh",
+        "id": "_clone_00SX",
         "max": 150,
         "min": 3,
         "name": "username",
