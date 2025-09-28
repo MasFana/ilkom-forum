@@ -30,13 +30,9 @@ export function usePosts({
         : undefined;
 
       if (sort === "popular") {
-        // Popular: use postsView, filter by last 3 days, sort by totalComments desc
-        const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString();
-
+        // Popular: sort by totalComments desc
         const list = await pb.collection("postsView").getList<PostViewRecord>(page, perPage, {
-          filter: searchFilter
-            ? pb.filter("created >= {:start} && ({:search})", { start: threeDaysAgo, search: searchFilter })
-            : pb.filter("created >= {:start}", { start: threeDaysAgo }),
+          filter: searchFilter,
           sort: "-totalComments",
           fields: "id,title,content,image_url,created,username,totalComments",
         });
