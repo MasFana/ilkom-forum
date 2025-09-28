@@ -4,13 +4,10 @@ import { Bell, CheckIcon, TrashIcon } from "lucide-react";
 import { useNotifications } from "../lib/use-notifications";
 import { useRouter } from "next/navigation";
 import { timeAgo } from "../lib/utils";
-import { getPB } from "../lib/pocketbase";
 
 export default function NotificationSidebar() {
   const { notifications, unreadCount, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
   const router = useRouter();
-  const pb = getPB();
-
   return (
     <Dropdown
       ariaLabel="Notifikasi"
