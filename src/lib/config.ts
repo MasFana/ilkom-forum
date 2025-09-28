@@ -1,4 +1,4 @@
-export const PB_URL = process.env.NEXT_PUBLIC_PB_URL || "https://masjangandihackya.zeabur.app";
+export const PB_URL = process.env.NEXT_PUBLIC_PB_URL || "https://beforum.fana.my.id";
 
 export const COOKIE_KEY = "pb_auth";
 
