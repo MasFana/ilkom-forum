@@ -7,6 +7,7 @@ import { PostCard } from "../components/post-card";
 import { usePosts, type SortMode } from "../lib/hooks";
 import type { PostRecord, UserRecord } from "../lib/pocketbase";
 import { calculateTotalPages } from "../lib/utils";
+import { DEFAULT_PER_PAGE } from "@/lib/config";
 
 function ForumInner() {
   const params = useSearchParams();
@@ -14,7 +15,7 @@ function ForumInner() {
   const q = params.get("q") || "";
   const [mobileSearch, setMobileSearch] = useState(q);
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  const perPage = DEFAULT_PER_PAGE;
   const sort = (params.get("sort") as SortMode) || "latest";
 
   function setSort(newSort: SortMode) {

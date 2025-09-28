@@ -95,6 +95,5 @@ export type NotificationRecord = RecordModel & {
   expand?: {
     post?: PostRecord;
     comment?: CommentRecord;
-    owner?: UserRecord;
   };
 };

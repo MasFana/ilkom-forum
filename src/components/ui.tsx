@@ -71,12 +71,14 @@ export function Dropdown({
   active = false,
   className,
   ariaLabel,
+  hideChevron = false,
 }: {
   label: React.ReactNode;
   children: React.ReactNode;
   active?: boolean;
   className?: string;
   ariaLabel?: string;
+  hideChevron?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -112,12 +114,13 @@ export function Dropdown({
         onClick={() => setOpen((v) => !v)}
       >
         {label}
-        <ChevronDown size={16} />
+        {hideChevron ? null : <ChevronDown size={16} />}
       </button>
       {open ? (
         <div
           role="menu"
-          className="absolute right-0 mt-2 min-w-[220px] rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-background p-2 shadow-lg z-50"
+          className="fixed max-h-screen overflow-y-scroll scrollbar-none md:absolute right-0 mt-2 min-w-[220px] rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-background p-2 shadow-lg z-50"
+          onClick={() => setOpen(false)}
         >
           {children}
         </div>
